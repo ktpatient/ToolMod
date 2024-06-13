@@ -18,10 +18,6 @@ public class BrittleModifier extends BooleanModifier {
     public static final String NAME = "Brittle";
 
     @Override
-    public String getName() {
-        return NAME;
-    }
-    @Override
     public MutableComponent tooltip(ItemStack stack) {
         return Component.literal("Brittle").withStyle(ChatFormatting.GREEN);
     }
@@ -34,6 +30,11 @@ public class BrittleModifier extends BooleanModifier {
     @Override
     public void onMine(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity entity, Random random) {
         stack.hurtAndBreak(3,entity, (e) -> e.broadcastBreakEvent(e.getUsedItemHand()));
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 
     @Override

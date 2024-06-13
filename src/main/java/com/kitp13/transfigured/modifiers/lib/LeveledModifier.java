@@ -19,11 +19,6 @@ public abstract class LeveledModifier implements Modifier {
     }
 
     @Override
-    public String getName() {
-        return "";
-    }
-
-    @Override
     public void onAttack(ItemStack stack, LivingEntity target, LivingEntity attacker, Random random) {
         Modifier.super.onAttack(stack, target, attacker, random);
     }
