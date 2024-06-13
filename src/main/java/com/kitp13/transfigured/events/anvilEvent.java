@@ -1,0 +1,118 @@
+package com.kitp13.transfigured.events;
+
+import com.kitp13.transfigured.Transfigured;
+import com.kitp13.transfigured.items.ModItems;
+import com.kitp13.transfigured.items.ToolCapabilities;
+import com.kitp13.transfigured.items.tools.PaxelAxe;
+import com.kitp13.transfigured.items.tools.PaxelBase;
+import com.kitp13.transfigured.items.tools.PaxelPaxe;
+import com.kitp13.transfigured.modifiers.lib.BooleanModifier;
+import com.kitp13.transfigured.modifiers.lib.LeveledModifier;
+import com.kitp13.transfigured.modifiers.lib.Modifier;
+import com.kitp13.transfigured.modifiers.lib.ModifierRegistry;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+
+import javax.swing.*;
+import java.util.Objects;
+
+@Mod.EventBusSubscriber(modid = Transfigured.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+public class anvilEvent {
+    public static Item getItemFromValue(int value){
+        Item[] arr = new Item[]{
+                null,
+                ModItems.PAXEL_PICKAXE.get(),
+                ModItems.PAXEL_AXE.get(),
+                ModItems.PAXEL_PAXE.get(),
+                ModItems.PAXEL_SHOVEL.get(),
+                ModItems.PAXEL_PAVEL.get(),
+                ModItems.PAXEL_SHAXE.get(),
+                ModItems.PAXEL_PAXEL.get(),
+        };
+        return arr[value];
+    }
+    public static ItemStack copyItemStackWithNbt(ItemStack source, Item targetItem) {
+        ItemStack target = new ItemStack(targetItem);
+
+        if (source.hasTag()) {
+            CompoundTag nbt = source.getTag();
+            target.setTag(nbt.copy());
+        }
+
+        target.setCount(source.getCount());
+        target.setDamageValue(source.getDamageValue());
+
+        return target;
+    }
+
+    @SubscribeEvent
+    public static void onAnvilUpdate(AnvilUpdateEvent event){
+        ItemStack leftStack = event.getLeft();
+        ItemStack rightStack = event.getRight();
+        if (rightStack.isEmpty()){
+            return;
+        }
+        if (leftStack.getItem() instanceof PaxelBase paxel){
+            if (PaxelBase.getSockets(leftStack)>0) {
+                ToolCapabilities[] capabilities = paxel.worksAsTool();
+                int running = 0;
+                for (ToolCapabilities capability : capabilities) {
+                    running += capability.getBit();
+                }
+                if (rightStack.getItem() instanceof PickaxeItem && !ToolCapabilities.contains(capabilities, ToolCapabilities.PICKAXE)) {
+                    Item item = getItemFromValue(running += ToolCapabilities.PICKAXE.getBit());
+                    ItemStack output = copyItemStackWithNbt(leftStack,item);
+                    PaxelBase.setSockets(output, PaxelBase.getSockets(output) - 1);
+                    event.setOutput(output);
+                    event.setCost(1);
+                }
+                if (rightStack.getItem() instanceof ShovelItem && !ToolCapabilities.contains(capabilities, ToolCapabilities.SHOVEL)) {
+                    Item item = getItemFromValue(running += ToolCapabilities.SHOVEL.getBit());
+                    ItemStack output = copyItemStackWithNbt(leftStack,item);
+                    PaxelBase.setSockets(output, PaxelBase.getSockets(output) - 1);
+                    event.setOutput(output);
+                    event.setCost(1);
+                }
+                if (rightStack.getItem() instanceof AxeItem && !ToolCapabilities.contains(capabilities, ToolCapabilities.AXE)) {
+                    Item item = getItemFromValue(running += ToolCapabilities.AXE.getBit());
+                    ItemStack output = copyItemStackWithNbt(leftStack,item);
+                    PaxelBase.setSockets(output, PaxelBase.getSockets(output) - 1);
+                    event.setOutput(output);
+                    event.setCost(1);
+                }
+                for (Modifier modifier : ModifierRegistry.MODIFIERS_MAP.values()){
+                    if (rightStack.getItem() == modifier.getApplyItem()){
+                        if (modifier instanceof BooleanModifier){
+                            ItemStack output = leftStack.copy();
+                            PaxelBase.setSockets(output, PaxelBase.getSockets(output)-1);
+                            PaxelBase.addModifier(output, modifier);
+                            event.setOutput(output);
+                            event.setCost(1);
+                            event.setMaterialCost(1);
+                        } else if (modifier instanceof LeveledModifier leveledModifier) {
+                            ItemStack output = leftStack.copy();
+                            PaxelBase.setSockets(output, PaxelBase.getSockets(output) - 1);
+                            int currentLevel = 0;
+                            for (Modifier modifiera : PaxelBase.getModifiers(output)) {
+                                if (Objects.equals(modifiera.getName(), leveledModifier.getName())) {
+                                    currentLevel += leveledModifier.getLevel();
+                                    PaxelBase.removeModifier(output, modifier);
+                                }
+                            }
+                            leveledModifier.setLevel(currentLevel + 1);
+                            PaxelBase.addModifier(output, leveledModifier.setLevel(currentLevel + 1));
+                            event.setOutput(output);
+                            event.setCost(1);
+                            event.setMaterialCost(1);
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}
