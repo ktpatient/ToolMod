@@ -1,4 +1,4 @@
-package com.kitp13.transfigured.items.tools;
+package com.kitp13.transfigured.items.tools.paxel;
 
 import com.kitp13.transfigured.Transfigured;
 import com.kitp13.transfigured.items.ToolCapabilities;

@@ -2,7 +2,7 @@ package com.kitp13.transfigured.items;
 
 import com.kitp13.transfigured.Transfigured;
 import com.kitp13.transfigured.items.tiers.Tiers;
-import com.kitp13.transfigured.items.tools.*;
+import com.kitp13.transfigured.items.tools.paxel.*;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;

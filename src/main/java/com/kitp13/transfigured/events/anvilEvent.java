@@ -3,21 +3,17 @@ package com.kitp13.transfigured.events;
 import com.kitp13.transfigured.Transfigured;
 import com.kitp13.transfigured.items.ModItems;
 import com.kitp13.transfigured.items.ToolCapabilities;
-import com.kitp13.transfigured.items.tools.PaxelAxe;
-import com.kitp13.transfigured.items.tools.PaxelBase;
-import com.kitp13.transfigured.items.tools.PaxelPaxe;
+import com.kitp13.transfigured.items.tools.paxel.PaxelBase;
 import com.kitp13.transfigured.modifiers.lib.BooleanModifier;
 import com.kitp13.transfigured.modifiers.lib.LeveledModifier;
 import com.kitp13.transfigured.modifiers.lib.Modifier;
 import com.kitp13.transfigured.modifiers.lib.ModifierRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import javax.swing.*;
 import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = Transfigured.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)

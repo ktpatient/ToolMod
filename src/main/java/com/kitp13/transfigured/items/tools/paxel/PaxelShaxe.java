@@ -1,24 +1,21 @@
-package com.kitp13.transfigured.items.tools;
+package com.kitp13.transfigured.items.tools.paxel;
 
 import com.kitp13.transfigured.items.ToolCapabilities;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
 
-public class PaxelPickaxe extends PaxelBase {
-    public static final ToolCapabilities[] Capabilities = new ToolCapabilities[]{ToolCapabilities.PICKAXE};
+public class PaxelShaxe extends PaxelBase {
+    public static final ToolCapabilities[] Capabilities = new ToolCapabilities[]{ToolCapabilities.SHOVEL,ToolCapabilities.AXE};
 
-    public PaxelPickaxe(float damage, float attackSpeed, Tier tier, TagKey<Block> blockTagKey, Properties properties) {
+    public PaxelShaxe(float damage, float attackSpeed, Tier tier, TagKey<Block> blockTagKey, Properties properties) {
         super(damage, attackSpeed, tier, blockTagKey, properties);
     }
-
     @Override
     public boolean isCorrectTool(BlockState state) {
-        return state.is(BlockTags.MINEABLE_WITH_PICKAXE);
+        return state.is(BlockTags.MINEABLE_WITH_AXE)||state.is(BlockTags.MINEABLE_WITH_SHOVEL);
     }
     @Override
     public ToolCapabilities[] worksAsTool() {
