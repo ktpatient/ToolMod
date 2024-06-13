@@ -15,10 +15,11 @@ public interface Modifier {
     String getName();
     ItemLike getApplyItem();
     default MutableComponent tooltip(ItemStack stack){
-        return Component.literal("");
+        // @thepigcat would be so proud of me :)
+        return Component.empty();
     }
     default MutableComponent shiftTooltip(ItemStack stack){
-        return Component.literal("");
+        return Component.empty();
     }
     default void onMine(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity entity, Random random){    }
     default void onAttack(ItemStack stack, LivingEntity target, LivingEntity attacker, Random random){}
