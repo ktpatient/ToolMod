@@ -1,6 +1,7 @@
 package com.kitp13.transfigured.modifiers;
 
 import com.kitp13.transfigured.Transfigured;
+import com.kitp13.transfigured.items.ModItems;
 import com.kitp13.transfigured.modifiers.lib.LeveledModifier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -28,7 +29,7 @@ public class MiningExpModifier extends LeveledModifier {
 
     @Override
     public ItemLike getApplyItem() {
-        return Items.EXPERIENCE_BOTTLE;
+        return ModItems.MINING_XP_MODIFIER_ITEM.get();
     }
 
     @Override

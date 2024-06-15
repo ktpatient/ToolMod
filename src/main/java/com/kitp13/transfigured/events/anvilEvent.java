@@ -215,12 +215,14 @@ public class anvilEvent {
                 for (Modifier modifier : ModifierRegistry.MODIFIERS_MAP.values()){
                     if (rightStack.getItem() == modifier.getApplyItem()){
                         if (modifier instanceof BooleanModifier){
-                            ItemStack output = leftStack.copy();
-                            setSockets(output, getUsedSockets(output) + 1);
-                            PaxelBase.addModifier(output, modifier);
-                            event.setOutput(output);
-                            event.setCost(1);
-                            event.setMaterialCost(1);
+                            if (!PaxelBase.hasModifier(leftStack,modifier.getName())){
+                                ItemStack output = leftStack.copy();
+                                setSockets(output, getUsedSockets(output) + 1);
+                                PaxelBase.addModifier(output, modifier);
+                                event.setOutput(output);
+                                event.setCost(1);
+                                event.setMaterialCost(1);
+                            }
                         } else if (modifier instanceof LeveledModifier leveledModifier) {
                             ItemStack output = leftStack.copy();
                             setSockets(output, getUsedSockets(output) + 1);
@@ -238,6 +240,21 @@ public class anvilEvent {
                             event.setMaterialCost(1);
                         }
                     }
+                }
+                if (rightStack.getItem() == ModItems.REPAIR_SLOT_DISCHARGER_ITEM.get()){
+                    ItemStack output = leftStack.copy();
+                    PaxelData.setRepairSlots(output,0);
+                    setSockets(output, getUsedSockets(output) + 1);
+                    event.setOutput(output);
+                    event.setCost(1);
+                    event.setMaterialCost(1);
+                } else if (rightStack.getItem() == ModItems.MINING_SPEED_AUGMENT.get()){
+                    ItemStack output = leftStack.copy();
+                    PaxelData.addMiningSpeed(output,10);
+                    setSockets(output, getUsedSockets(output) + 1);
+                    event.setOutput(output);
+                    event.setCost(1);
+                    event.setMaterialCost(1);
                 }
             }
 

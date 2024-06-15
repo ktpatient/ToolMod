@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "transfigured:item/mining_xp_modifier_item"
+  }
+}

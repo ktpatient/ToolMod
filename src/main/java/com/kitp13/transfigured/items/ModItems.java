@@ -3,6 +3,7 @@ package com.kitp13.transfigured.items;
 import com.kitp13.transfigured.Transfigured;
 import com.kitp13.transfigured.items.tiers.Tiers;
 import com.kitp13.transfigured.items.tools.paxel.*;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -11,6 +12,11 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModItems {
     public static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Transfigured.MOD_ID);
+
+    public static RegistryObject<Item> MINING_DURABILITY_MODIFIER_ITEM = ITEMS.register("mining_durability_modifier", ()->new Item(new Item.Properties())) ;
+    public static RegistryObject<Item> MINING_SPEED_AUGMENT = ITEMS.register("mining_speed_augment", ()->new Item(new Item.Properties())) ;
+    public static RegistryObject<Item> MINING_XP_MODIFIER_ITEM = ITEMS.register("mining_xp_modifier", ()->new Item(new Item.Properties())) ;
+    public static RegistryObject<Item> REPAIR_SLOT_DISCHARGER_ITEM = ITEMS.register("repair_slot_discharger", ()->new Item(new Item.Properties())) ;
 
     public static RegistryObject<Item> PAXEL_AXE = ITEMS.register("paxel_axe", () -> new PaxelAxe(5.0f,-3.0f, Tiers.TEST_TIER,null,new Item.Properties()));
     public static RegistryObject<Item> PAXEL_PAVEL = ITEMS.register("paxel_pavel", () -> new PaxelPavel(5.0f,-3.0f, Tiers.TEST_TIER,null,new Item.Properties()));

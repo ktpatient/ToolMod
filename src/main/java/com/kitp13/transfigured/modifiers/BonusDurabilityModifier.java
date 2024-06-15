@@ -1,5 +1,6 @@
 package com.kitp13.transfigured.modifiers;
 
+import com.kitp13.transfigured.items.ModItems;
 import com.kitp13.transfigured.items.tools.paxel.data.PaxelData;
 import com.kitp13.transfigured.modifiers.lib.BooleanModifier;
 import net.minecraft.ChatFormatting;
@@ -26,7 +27,7 @@ public class BonusDurabilityModifier extends BooleanModifier {
 
     @Override
     public ItemLike getApplyItem() {
-        return Items.ANVIL;
+        return ModItems.MINING_DURABILITY_MODIFIER_ITEM.get();
     }
 
     @Override

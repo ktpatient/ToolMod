@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "transfigured:item/mining_durability_modifier_item"
+  }
+}

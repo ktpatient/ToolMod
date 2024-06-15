@@ -3,9 +3,9 @@ package com.kitp13.transfigured.items;
 import javax.tools.Tool;
 
 public enum ToolCapabilities {
-    PICKAXE(1,"pickaxe"), // 0001
-    AXE(2,"axe"),         // 0010
-    SHOVEL(4, "shovel");  // 0100
+    PICKAXE(1,"Pickaxe"), // 0001
+    AXE(2,"Axe"),         // 0010
+    SHOVEL(4, "Shovel");  // 0100
 
     private final int bit;
     private final String name;

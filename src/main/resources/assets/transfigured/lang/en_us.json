@@ -7,6 +7,11 @@
   "item.transfigured.paxel_paxe": "Paxe",
   "item.transfigured.paxel_paxel": "Paxel",
 
+  "item.transfigured.mining_durability_modifier": "Durability Modifier",
+  "item.transfigured.mining_xp_modifier": "XP Modifier",
+  "item.transfigured.repair_slot_discharger": "Repair Slot Discharger",
+  "item.transfigured.mining_speed_augment": "Mining Speed Augment",
+
   "item.transfigured.wooden_paxel_shaxe": "Wooden Shaxe",
   "item.transfigured.wooden_paxel_pavel": "Wooden Pavel",
   "item.transfigured.wooden_paxel_paxe": "Wooden Paxe",
