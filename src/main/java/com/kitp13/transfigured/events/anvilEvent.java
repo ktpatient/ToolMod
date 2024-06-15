@@ -134,41 +134,12 @@ public class anvilEvent {
             return;
         }
         if (leftStack.getItem() instanceof TieredItem tieredItemLeft && rightStack.getItem() instanceof TieredItem tieredItemRight){
-            if (tieredItemLeft.getTier() == tieredItemRight.getTier()){
-                if (leftStack.getItem() instanceof PickaxeItem){
-                    if (rightStack.getItem() instanceof AxeItem){
-                        Item out = getItemFromValue(tieredItemLeft.getTier(),ToolCapabilities.combine(ToolCapabilities.PICKAXE,ToolCapabilities.AXE));
-                        event.setOutput(setDefault(copyItemStackWithNbt(leftStack,out),tieredItemLeft.getTier().getLevel()+1,tieredItemLeft.getTier().getLevel()+1));
-                        event.setCost(1);
-                    }
-                    if (rightStack.getItem() instanceof ShovelItem){
-                        Item out = getItemFromValue(tieredItemLeft.getTier(),ToolCapabilities.combine(ToolCapabilities.PICKAXE,ToolCapabilities.SHOVEL));
-                        event.setOutput(setDefault(copyItemStackWithNbt(leftStack,out),tieredItemLeft.getTier().getLevel()+1,tieredItemLeft.getTier().getLevel()+1));
-                        event.setCost(1);
-                    }
-                }else if (leftStack.getItem() instanceof AxeItem){
-                    if (rightStack.getItem() instanceof PickaxeItem){
-                        Item out = getItemFromValue(tieredItemLeft.getTier(),ToolCapabilities.combine(ToolCapabilities.PICKAXE,ToolCapabilities.AXE));
-                        event.setOutput(setDefault(copyItemStackWithNbt(leftStack,out),tieredItemLeft.getTier().getLevel()+1,tieredItemLeft.getTier().getLevel()+1));
-                        event.setCost(1);
-                    }
-                    if (rightStack.getItem() instanceof ShovelItem){
-                        Item out = getItemFromValue(tieredItemLeft.getTier(),ToolCapabilities.combine(ToolCapabilities.PICKAXE,ToolCapabilities.AXE));
-                        event.setOutput(setDefault(copyItemStackWithNbt(leftStack,out),tieredItemLeft.getTier().getLevel()+1,tieredItemLeft.getTier().getLevel()+1));
-                        event.setCost(1);
-                    }
-                } else if (leftStack.getItem() instanceof ShovelItem){
-                    if (rightStack.getItem() instanceof AxeItem){
-                        Item out = getItemFromValue(tieredItemLeft.getTier(),ToolCapabilities.combine(ToolCapabilities.PICKAXE,ToolCapabilities.AXE));
-                        event.setOutput(setDefault(copyItemStackWithNbt(leftStack,out),tieredItemLeft.getTier().getLevel()+1,tieredItemLeft.getTier().getLevel()+1));
-                        event.setCost(1);
-                    }
-                    if (rightStack.getItem() instanceof PickaxeItem){
-                        Item out = getItemFromValue(tieredItemLeft.getTier(),ToolCapabilities.combine(ToolCapabilities.PICKAXE,ToolCapabilities.AXE));
-                        event.setOutput(setDefault(copyItemStackWithNbt(leftStack,out),tieredItemLeft.getTier().getLevel()+1,tieredItemLeft.getTier().getLevel()+1));
-                        event.setCost(1);
-                    }
-                }
+            if ((tieredItemLeft.getTier() == tieredItemRight.getTier()) &&leftStack.getItem()!=rightStack.getItem()){
+
+                int capabilities = ToolCapabilities.combine(ToolCapabilities.fromTool(leftStack),ToolCapabilities.fromTool(rightStack));
+                Item out = getItemFromValue(tieredItemLeft.getTier(), capabilities);
+                event.setOutput(setDefault(copyItemStackWithNbt(leftStack,out),tieredItemLeft.getTier().getLevel()+1,tieredItemLeft.getTier().getLevel()+1));
+                event.setCost(1);
             }
         }
         if (leftStack.getItem() instanceof PaxelBase paxel){

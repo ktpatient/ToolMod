@@ -1,5 +1,10 @@
 package com.kitp13.transfigured.items;
 
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.world.item.ShovelItem;
+
 import javax.tools.Tool;
 
 public enum ToolCapabilities {
@@ -38,5 +43,11 @@ public enum ToolCapabilities {
             if (cap == checkVal) {return true; }
         }
         return false;
+    }
+    public static ToolCapabilities fromTool(ItemStack stack){
+        if (stack.getItem() instanceof PickaxeItem) {return PICKAXE;}
+        if (stack.getItem() instanceof AxeItem) {return AXE;}
+        if (stack.getItem() instanceof ShovelItem) {return SHOVEL;}
+        return PICKAXE;
     }
 }
