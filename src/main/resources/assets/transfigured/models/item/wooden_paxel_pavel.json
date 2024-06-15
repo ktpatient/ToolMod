@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "transfigured:item/wooden_paxel_pavel"
+  }
+}

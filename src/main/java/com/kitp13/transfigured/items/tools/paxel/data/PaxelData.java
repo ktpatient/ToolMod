@@ -82,4 +82,9 @@ public class PaxelData {
         PaxelData newData = new PaxelData(data.getTotalSockets(), sockets, data.getMiningSpeedModifier(), data.getTotalRepairs(),data.getUsedRepairs(), data.getDurabilityModifier(), data.isBroken());
         setToolData(stack,newData);
     }
+    public static void setModifiedDurability(ItemStack stack, int dura) {
+        PaxelData data = getToolData(stack);
+        PaxelData newData = new PaxelData(data.getTotalSockets(), data.getUsedSockets(), data.getMiningSpeedModifier(), data.getTotalRepairs(),data.getUsedRepairs(), dura, data.isBroken());
+        setToolData(stack,newData);
+    }
 }

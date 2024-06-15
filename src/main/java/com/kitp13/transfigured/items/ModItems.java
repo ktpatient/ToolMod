@@ -20,6 +20,36 @@ public class ModItems {
     public static RegistryObject<Item> PAXEL_SHAXE = ITEMS.register("paxel_shaxe", () -> new PaxelShaxe(5.0f,-3.0f, Tiers.TEST_TIER,null,new Item.Properties()));
     public static RegistryObject<Item> PAXEL_SHOVEL = ITEMS.register("paxel_shovel", () -> new PaxelShovel(5.0f,-3.0f, Tiers.TEST_TIER,null,new Item.Properties()));
 
+    public static RegistryObject<Item> WOODEN_PAXEL_PAVEL = ITEMS.register("wooden_paxel_pavel", () -> new PaxelPavel(5.0f,-3.0f, net.minecraft.world.item.Tiers.WOOD,null,new Item.Properties()));
+    public static RegistryObject<Item> WOODEN_PAXEL_PAXE = ITEMS.register("wooden_paxel_paxe", () -> new PaxelPaxe(5.0f,-3.0f, net.minecraft.world.item.Tiers.WOOD,null,new Item.Properties()));
+    public static RegistryObject<Item> WOODEN_PAXEL_PAXEL = ITEMS.register("wooden_paxel_paxel", () -> new PaxelPaxel(5.0f,-3.0f, net.minecraft.world.item.Tiers.WOOD,null,new Item.Properties()));
+    public static RegistryObject<Item> WOODEN_PAXEL_SHAXE = ITEMS.register("wooden_paxel_shaxe", () -> new PaxelShaxe(5.0f,-3.0f, net.minecraft.world.item.Tiers.WOOD,null,new Item.Properties()));
+
+    public static RegistryObject<Item> STONE_PAXEL_PAVEL = ITEMS.register("stone_paxel_pavel", () -> new PaxelPavel(5.0f,-3.0f, net.minecraft.world.item.Tiers.STONE,null,new Item.Properties()));
+    public static RegistryObject<Item> STONE_PAXEL_PAXE = ITEMS.register("stone_paxel_paxe", () -> new PaxelPaxe(5.0f,-3.0f, net.minecraft.world.item.Tiers.STONE,null,new Item.Properties()));
+    public static RegistryObject<Item> STONE_PAXEL_PAXEL = ITEMS.register("stone_paxel_paxel", () -> new PaxelPaxel(5.0f,-3.0f, net.minecraft.world.item.Tiers.STONE,null,new Item.Properties()));
+    public static RegistryObject<Item> STONE_PAXEL_SHAXE = ITEMS.register("stone_paxel_shaxe", () -> new PaxelShaxe(5.0f,-3.0f, net.minecraft.world.item.Tiers.STONE,null,new Item.Properties()));
+
+    public static RegistryObject<Item> IRON_PAXEL_PAVEL = ITEMS.register("iron_paxel_pavel", () -> new PaxelPavel(5.0f,-3.0f, net.minecraft.world.item.Tiers.IRON,null,new Item.Properties()));
+    public static RegistryObject<Item> IRON_PAXEL_PAXE =  ITEMS.register("iron_paxel_paxe",   () -> new PaxelPaxe(5.0f,-3.0f, net.minecraft.world.item.Tiers.IRON,null,new Item.Properties()));
+    public static RegistryObject<Item> IRON_PAXEL_PAXEL = ITEMS.register("iron_paxel_paxel", () -> new PaxelPaxel(5.0f,-3.0f, net.minecraft.world.item.Tiers.IRON,null,new Item.Properties()));
+    public static RegistryObject<Item> IRON_PAXEL_SHAXE = ITEMS.register("iron_paxel_shaxe", () -> new PaxelShaxe(5.0f,-3.0f, net.minecraft.world.item.Tiers.IRON,null,new Item.Properties()));
+
+    public static RegistryObject<Item> GOLD_PAXEL_PAVEL = ITEMS.register("gold_paxel_pavel", () -> new PaxelPavel(5.0f,-3.0f, net.minecraft.world.item.Tiers.GOLD,null,new Item.Properties()));
+    public static RegistryObject<Item> GOLD_PAXEL_PAXE =  ITEMS.register("gold_paxel_paxe",   () -> new PaxelPaxe(5.0f,-3.0f, net.minecraft.world.item.Tiers.GOLD,null,new Item.Properties()));
+    public static RegistryObject<Item> GOLD_PAXEL_PAXEL = ITEMS.register("gold_paxel_paxel", () -> new PaxelPaxel(5.0f,-3.0f, net.minecraft.world.item.Tiers.GOLD,null,new Item.Properties()));
+    public static RegistryObject<Item> GOLD_PAXEL_SHAXE = ITEMS.register("gold_paxel_shaxe", () -> new PaxelShaxe(5.0f,-3.0f, net.minecraft.world.item.Tiers.GOLD,null,new Item.Properties()));
+
+    public static RegistryObject<Item> DIAMOND_PAXEL_PAVEL = ITEMS.register("diamond_paxel_pavel", () -> new PaxelPavel(5.0f,-3.0f, net.minecraft.world.item.Tiers.DIAMOND,null,new Item.Properties()));
+    public static RegistryObject<Item> DIAMOND_PAXEL_PAXE =  ITEMS.register("diamond_paxel_paxe",   () -> new PaxelPaxe(5.0f,-3.0f, net.minecraft.world.item.Tiers.DIAMOND,null,new Item.Properties()));
+    public static RegistryObject<Item> DIAMOND_PAXEL_PAXEL = ITEMS.register("diamond_paxel_paxel", () -> new PaxelPaxel(5.0f,-3.0f, net.minecraft.world.item.Tiers.DIAMOND,null,new Item.Properties()));
+    public static RegistryObject<Item> DIAMOND_PAXEL_SHAXE = ITEMS.register("diamond_paxel_shaxe", () -> new PaxelShaxe(5.0f,-3.0f, net.minecraft.world.item.Tiers.DIAMOND,null,new Item.Properties()));
+
+    public static RegistryObject<Item> NETHERITE_PAXEL_PAVEL = ITEMS.register("netherite_paxel_pavel", () -> new PaxelPavel(5.0f,-3.0f, net.minecraft.world.item.Tiers.NETHERITE,null,new Item.Properties()));
+    public static RegistryObject<Item> NETHERITE_PAXEL_PAXE =  ITEMS.register("netherite_paxel_paxe",   () -> new PaxelPaxe(5.0f,-3.0f, net.minecraft.world.item.Tiers.NETHERITE,null,new Item.Properties()));
+    public static RegistryObject<Item> NETHERITE_PAXEL_PAXEL = ITEMS.register("netherite_paxel_paxel", () -> new PaxelPaxel(5.0f,-3.0f, net.minecraft.world.item.Tiers.NETHERITE,null,new Item.Properties()));
+    public static RegistryObject<Item> NETHERITE_PAXEL_SHAXE = ITEMS.register("netherite_paxel_shaxe", () -> new PaxelShaxe(5.0f,-3.0f, net.minecraft.world.item.Tiers.NETHERITE,null,new Item.Properties()));
+
     public static void register(IEventBus bus){
         ITEMS.register(bus);
     }

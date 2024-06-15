@@ -26,6 +26,9 @@ import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -34,6 +37,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import static com.kitp13.transfigured.items.tools.paxel.data.PaxelData.*;
@@ -49,6 +53,22 @@ public class PaxelBase extends DiggerItem {
         return false;
     }
 
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        if (enchantment == Enchantments.MENDING){
+            return false;
+        }
+        return super.canApplyAtEnchantingTable(stack, enchantment);
+    }
+
+    @Override
+    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(book);
+        if (enchantments.containsKey(Enchantments.MENDING)) {
+            return false;
+        }
+        return super.isBookEnchantable(stack, book);
+    }
     @Override
     public boolean isCorrectToolForDrops(@NotNull ItemStack stack, @NotNull BlockState state) {
         return isCorrectTool(state) & !getToolData(stack).isBroken();
@@ -70,10 +90,20 @@ public class PaxelBase extends DiggerItem {
         if (data.isBroken()){
             tooltip.add(Component.empty().append(Component.literal("BROKEN").withStyle(ChatFormatting.RED)));
         }
-        tooltip.add(Component.empty().append(Component.literal("Sockets: ")).append(Component.literal("■ ".repeat(data.getUsedSockets())).withStyle(ChatFormatting.GREEN)).append("■ ".repeat(data.getTotalSockets()-data.getUsedSockets())).withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.empty().append(Component.literal("Repairs: ")).append(Component.literal("■ ".repeat(data.getUsedRepairs())).withStyle(ChatFormatting.GREEN)).append("■ ".repeat(data.getTotalRepairs()-data.getUsedRepairs())).withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.empty().append(Component.literal("Mining Speed Modifier: ")).append(Component.literal(""+getMiningSpeedModifier(stack)).withStyle(ChatFormatting.BLUE)));
-        tooltip.add(Component.empty().append(Component.literal("Durability Modifier: ")).append(Component.literal(""+getDurabilityModifier(stack)).withStyle(ChatFormatting.BLUE)));
+        //tooltip.add(Component.empty().append(Component.literal("Sockets: ")).append(Component.literal("■ ".repeat(data.getUsedSockets())).withStyle(ChatFormatting.GREEN)).append("■ ".repeat(data.getTotalSockets()-data.getUsedSockets())).withStyle(ChatFormatting.GRAY));
+        //tooltip.add(Component.empty().append(Component.literal("Sockets: ")).append(Component.literal("● ".repeat(data.getUsedSockets())).withStyle(ChatFormatting.GREEN)).append("● ".repeat(data.getTotalSockets()-data.getUsedSockets())).withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.empty().append(Component.literal("Sockets: ")).append(Component.literal("◆ ".repeat(data.getUsedSockets())).withStyle(ChatFormatting.GREEN)).append("◆ ".repeat(data.getTotalSockets()-data.getUsedSockets())).withStyle(ChatFormatting.GRAY));
+       // tooltip.add(Component.empty().append(Component.literal("Sockets: ")).append(Component.literal("⬟ ".repeat(data.getUsedSockets())).withStyle(ChatFormatting.GREEN)).append("⬟ ".repeat(data.getTotalSockets()-data.getUsedSockets())).withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.empty().append(Component.literal("Repairs: ")).append(Component.literal("◆ ".repeat(data.getUsedRepairs())).withStyle(ChatFormatting.GREEN)).append("◆ ".repeat(data.getTotalRepairs()-data.getUsedRepairs())).withStyle(ChatFormatting.GRAY));
+        int miningSpeedModifier = getMiningSpeedModifier(stack);
+        int durabilityModifier = getDurabilityModifier(stack);
+        if (miningSpeedModifier > 0) {
+            tooltip.add(Component.empty().append(Component.literal("Mining Speed Modifier: ")).append(Component.literal(""+getMiningSpeedModifier(stack)).withStyle(ChatFormatting.BLUE)));
+        }
+        if (durabilityModifier > 0) {
+            tooltip.add(Component.empty().append(Component.literal("Durability Modifier: ")).append(Component.literal("" + getDurabilityModifier(stack)).withStyle(ChatFormatting.BLUE)));
+        }
+
         for (ToolCapabilities tool : worksAsTool()){
             tooltip.add(Component.empty().append(Component.literal("Works as Tool: ")).append(Component.literal(tool.getName()).withStyle(ChatFormatting.BLUE)));
         }

@@ -1,6 +1,7 @@
 package com.kitp13.transfigured;
 
 import com.kitp13.transfigured.items.ModItems;
+import com.kitp13.transfigured.modifiers.BonusDurabilityModifier;
 import com.kitp13.transfigured.modifiers.BrittleModifier;
 import com.kitp13.transfigured.modifiers.MiningExpModifier;
 import com.kitp13.transfigured.modifiers.lib.ModifierRegistry;
@@ -19,6 +20,7 @@ public class Transfigured {
     public Transfigured(){
         ModifierRegistry.registerModifier(BrittleModifier.NAME,new BrittleModifier());
         ModifierRegistry.registerModifier(MiningExpModifier.NAME,new MiningExpModifier());
+        ModifierRegistry.registerModifier(BonusDurabilityModifier.NAME,new BonusDurabilityModifier());
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ModItems.register(bus);
     }

@@ -44,7 +44,7 @@ public class MiningExpModifier extends LeveledModifier {
     @Override
     public void onMine(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity entity, Random random) {
         int rand = random.nextInt(10);
-        Transfigured.LOGGER.info(rand);
+        // Transfigured.LOGGER.info(rand);
         if (rand>=8){
             ExperienceOrb.award((ServerLevel) level,pos.getCenter(),getLevel());
         }

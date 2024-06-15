@@ -21,7 +21,80 @@ import static com.kitp13.transfigured.items.tools.paxel.data.PaxelData.*;
 
 @Mod.EventBusSubscriber(modid = Transfigured.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class anvilEvent {
-    public static Item getItemFromValue(int value){
+    public static Item getItemFromValue(Tier tier,int value){
+        if (tier == Tiers.WOOD){
+            Item[] arr = new Item[]{
+                    null,
+                    null,
+                    null,
+                    ModItems.WOODEN_PAXEL_PAXE.get(),
+                    null,
+                    ModItems.WOODEN_PAXEL_PAVEL.get(),
+                    ModItems.WOODEN_PAXEL_SHAXE.get(),
+                    ModItems.WOODEN_PAXEL_PAXEL.get(),
+            };
+            return arr[value];
+        } else if (tier == Tiers.STONE){
+            Item[] arr = new Item[]{
+                    null,
+                    null,
+                    null,
+                    ModItems.STONE_PAXEL_PAXE.get(),
+                    null,
+                    ModItems.STONE_PAXEL_PAVEL.get(),
+                    ModItems.STONE_PAXEL_SHAXE.get(),
+                    ModItems.STONE_PAXEL_PAXEL.get(),
+            };
+            return arr[value];
+        }else if (tier == Tiers.IRON){
+            Item[] arr = new Item[]{
+                    null,
+                    null,
+                    null,
+                    ModItems.IRON_PAXEL_PAXE.get(),
+                    null,
+                    ModItems.IRON_PAXEL_PAVEL.get(),
+                    ModItems.IRON_PAXEL_SHAXE.get(),
+                    ModItems.IRON_PAXEL_PAXEL.get(),
+            };
+            return arr[value];
+        }else if (tier == Tiers.GOLD){
+            Item[] arr = new Item[]{
+                    null,
+                    null,
+                    null,
+                    ModItems.GOLD_PAXEL_PAXE.get(),
+                    null,
+                    ModItems.GOLD_PAXEL_PAVEL.get(),
+                    ModItems.GOLD_PAXEL_SHAXE.get(),
+                    ModItems.GOLD_PAXEL_PAXEL.get(),
+            };
+            return arr[value];
+        }else if (tier == Tiers.DIAMOND){
+            Item[] arr = new Item[]{
+                    null,
+                    null,
+                    null,
+                    ModItems.DIAMOND_PAXEL_PAXE.get(),
+                    null,
+                    ModItems.DIAMOND_PAXEL_PAVEL.get(),
+                    ModItems.DIAMOND_PAXEL_SHAXE.get(),
+                    ModItems.DIAMOND_PAXEL_PAXEL.get(),
+            };
+            return arr[value];
+        }else if (tier == Tiers.NETHERITE){
+            Item[] arr = new Item[]{
+                    null,
+                    null,
+                    null,
+                    ModItems.NETHERITE_PAXEL_PAXE.get(),
+                    null,
+                    ModItems.NETHERITE_PAXEL_PAVEL.get(),
+                    ModItems.NETHERITE_PAXEL_SHAXE.get(),
+                    ModItems.NETHERITE_PAXEL_PAXEL.get(),
+            };
+            return arr[value];
+        }
         Item[] arr = new Item[]{
                 null,
                 ModItems.PAXEL_PICKAXE.get(),
@@ -33,6 +106,11 @@ public class anvilEvent {
                 ModItems.PAXEL_PAXEL.get(),
         };
         return arr[value];
+    }
+    public static ItemStack setDefault(ItemStack stack, int maxRepairs, int maxSockets){
+        PaxelData newData = new PaxelData(maxSockets,0,0,maxRepairs,0,0,false);
+        PaxelData.setToolData(stack,newData);
+        return stack;
     }
     public static ItemStack copyItemStackWithNbt(ItemStack source, Item targetItem) {
         ItemStack target = new ItemStack(targetItem);
@@ -55,15 +133,56 @@ public class anvilEvent {
         if (rightStack.isEmpty()){
             return;
         }
+        if (leftStack.getItem() instanceof TieredItem tieredItemLeft && rightStack.getItem() instanceof TieredItem tieredItemRight){
+            if (tieredItemLeft.getTier() == tieredItemRight.getTier()){
+                if (leftStack.getItem() instanceof PickaxeItem){
+                    if (rightStack.getItem() instanceof AxeItem){
+                        Item out = getItemFromValue(tieredItemLeft.getTier(),ToolCapabilities.combine(ToolCapabilities.PICKAXE,ToolCapabilities.AXE));
+                        event.setOutput(setDefault(copyItemStackWithNbt(leftStack,out),tieredItemLeft.getTier().getLevel()+1,tieredItemLeft.getTier().getLevel()+1));
+                        event.setCost(1);
+                    }
+                    if (rightStack.getItem() instanceof ShovelItem){
+                        Item out = getItemFromValue(tieredItemLeft.getTier(),ToolCapabilities.combine(ToolCapabilities.PICKAXE,ToolCapabilities.SHOVEL));
+                        event.setOutput(setDefault(copyItemStackWithNbt(leftStack,out),tieredItemLeft.getTier().getLevel()+1,tieredItemLeft.getTier().getLevel()+1));
+                        event.setCost(1);
+                    }
+                }else if (leftStack.getItem() instanceof AxeItem){
+                    if (rightStack.getItem() instanceof PickaxeItem){
+                        Item out = getItemFromValue(tieredItemLeft.getTier(),ToolCapabilities.combine(ToolCapabilities.PICKAXE,ToolCapabilities.AXE));
+                        event.setOutput(setDefault(copyItemStackWithNbt(leftStack,out),tieredItemLeft.getTier().getLevel()+1,tieredItemLeft.getTier().getLevel()+1));
+                        event.setCost(1);
+                    }
+                    if (rightStack.getItem() instanceof ShovelItem){
+                        Item out = getItemFromValue(tieredItemLeft.getTier(),ToolCapabilities.combine(ToolCapabilities.PICKAXE,ToolCapabilities.AXE));
+                        event.setOutput(setDefault(copyItemStackWithNbt(leftStack,out),tieredItemLeft.getTier().getLevel()+1,tieredItemLeft.getTier().getLevel()+1));
+                        event.setCost(1);
+                    }
+                } else if (leftStack.getItem() instanceof ShovelItem){
+                    if (rightStack.getItem() instanceof AxeItem){
+                        Item out = getItemFromValue(tieredItemLeft.getTier(),ToolCapabilities.combine(ToolCapabilities.PICKAXE,ToolCapabilities.AXE));
+                        event.setOutput(setDefault(copyItemStackWithNbt(leftStack,out),tieredItemLeft.getTier().getLevel()+1,tieredItemLeft.getTier().getLevel()+1));
+                        event.setCost(1);
+                    }
+                    if (rightStack.getItem() instanceof PickaxeItem){
+                        Item out = getItemFromValue(tieredItemLeft.getTier(),ToolCapabilities.combine(ToolCapabilities.PICKAXE,ToolCapabilities.AXE));
+                        event.setOutput(setDefault(copyItemStackWithNbt(leftStack,out),tieredItemLeft.getTier().getLevel()+1,tieredItemLeft.getTier().getLevel()+1));
+                        event.setCost(1);
+                    }
+                }
+            }
+        }
         if (leftStack.getItem() instanceof PaxelBase paxel){
             PaxelData data = getToolData(leftStack);
-            if (rightStack.getItem() == Items.ANVIL && data.getTotalRepairs()-data.getUsedRepairs()>0&& data.isBroken()){
-                ItemStack output = leftStack.copy();
-                PaxelData newData = new PaxelData(data.getTotalSockets(), data.getUsedSockets(), data.getMiningSpeedModifier(), data.getTotalRepairs(),data.getUsedRepairs()+1, data.getDurabilityModifier(), false);
-                setToolData(output,newData);
-                event.setOutput(output);
-                event.setCost(1);
-                event.setMaterialCost(1);
+            if (paxel.getTier().getRepairIngredient().getItems().length>0){
+                if (rightStack.getItem() == paxel.getTier().getRepairIngredient().getItems()[0].getItem() && data.getTotalRepairs()-data.getUsedRepairs()>0){
+                    ItemStack output = leftStack.copy();
+                    PaxelData newData = new PaxelData(data.getTotalSockets(), data.getUsedSockets(), data.getMiningSpeedModifier(), data.getTotalRepairs(),data.getUsedRepairs()+1, data.getDurabilityModifier(), false);
+                    setToolData(output,newData);
+                    output.setDamageValue(0);
+                    event.setOutput(output);
+                    event.setCost(1);
+                    event.setMaterialCost(1);
+                }
             }
             if (getSockets(leftStack)>0) {
                 ToolCapabilities[] capabilities = paxel.worksAsTool();
@@ -73,21 +192,21 @@ public class anvilEvent {
                 }
 
                 if (rightStack.getItem() instanceof PickaxeItem && !ToolCapabilities.contains(capabilities, ToolCapabilities.PICKAXE)) {
-                    Item item = getItemFromValue(running += ToolCapabilities.PICKAXE.getBit());
+                    Item item = getItemFromValue(((PaxelBase) leftStack.getItem()).getTier(), running += ToolCapabilities.PICKAXE.getBit());
                     ItemStack output = copyItemStackWithNbt(leftStack,item);
                     setSockets(output, getUsedSockets(output) + 1);
                     event.setOutput(output);
                     event.setCost(1);
                 }
                 if (rightStack.getItem() instanceof ShovelItem && !ToolCapabilities.contains(capabilities, ToolCapabilities.SHOVEL)) {
-                    Item item = getItemFromValue(running += ToolCapabilities.SHOVEL.getBit());
+                    Item item = getItemFromValue(((PaxelBase) leftStack.getItem()).getTier(),running += ToolCapabilities.SHOVEL.getBit());
                     ItemStack output = copyItemStackWithNbt(leftStack,item);
                     setSockets(output, getUsedSockets(output) + 1);
                     event.setOutput(output);
                     event.setCost(1);
                 }
                 if (rightStack.getItem() instanceof AxeItem && !ToolCapabilities.contains(capabilities, ToolCapabilities.AXE)) {
-                    Item item = getItemFromValue(running += ToolCapabilities.AXE.getBit());
+                    Item item = getItemFromValue(((PaxelBase) leftStack.getItem()).getTier(),running += ToolCapabilities.AXE.getBit());
                     ItemStack output = copyItemStackWithNbt(leftStack,item);
                     setSockets(output, getUsedSockets(output) + 1);
                     event.setOutput(output);

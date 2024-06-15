@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "transfigured:item/diamond_paxel_paxel"
+  }
+}
