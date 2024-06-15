@@ -18,6 +18,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.Objects;
 
 import static com.kitp13.transfigured.items.tools.paxel.data.PaxelData.*;
+import static com.kitp13.transfigured.modifiers.lib.Modifiers.*;
 
 @Mod.EventBusSubscriber(modid = Transfigured.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class anvilEvent {
@@ -186,10 +187,10 @@ public class anvilEvent {
                 for (Modifier modifier : ModifierRegistry.MODIFIERS_MAP.values()){
                     if (rightStack.getItem() == modifier.getApplyItem()){
                         if (modifier instanceof BooleanModifier){
-                            if (!PaxelBase.hasModifier(leftStack,modifier.getName())){
+                            if (!hasModifier(leftStack,modifier.getName())){
                                 ItemStack output = leftStack.copy();
                                 setSockets(output, getUsedSockets(output) + 1);
-                                PaxelBase.addModifier(output, modifier);
+                                addModifier(output, modifier);
                                 event.setOutput(output);
                                 event.setCost(1);
                                 event.setMaterialCost(1);
@@ -198,14 +199,14 @@ public class anvilEvent {
                             ItemStack output = leftStack.copy();
                             setSockets(output, getUsedSockets(output) + 1);
                             int currentLevel = 0;
-                            for (Modifier modifiera : PaxelBase.getModifiers(output)) {
+                            for (Modifier modifiera : getModifiers(output)) {
                                 if (Objects.equals(modifiera.getName(), leveledModifier.getName())) {
                                     currentLevel += leveledModifier.getLevel();
-                                    PaxelBase.removeModifier(output, modifier);
+                                    removeModifier(output, modifier);
                                 }
                             }
                             leveledModifier.setLevel(currentLevel + 1);
-                            PaxelBase.addModifier(output, leveledModifier.setLevel(currentLevel + 1));
+                            addModifier(output, leveledModifier.setLevel(currentLevel + 1));
                             event.setOutput(output);
                             event.setCost(1);
                             event.setMaterialCost(1);

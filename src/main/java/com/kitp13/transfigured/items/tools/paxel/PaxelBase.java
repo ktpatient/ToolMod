@@ -41,10 +41,10 @@ import java.util.Map;
 import java.util.Random;
 
 import static com.kitp13.transfigured.items.tools.paxel.data.PaxelData.*;
+import static com.kitp13.transfigured.modifiers.lib.Modifiers.getModifiers;
 
 public class PaxelBase extends DiggerItem {
     private final Random random;
-    private static final String MODIFIERS_KEY = "Modifiers";
     public PaxelBase(float damage, float attackSpeed, Tier tier, TagKey<Block> blockTagKey, Properties properties) {
         super(damage, attackSpeed, tier, blockTagKey, properties);
         random = new Random();
@@ -90,10 +90,7 @@ public class PaxelBase extends DiggerItem {
         if (data.isBroken()){
             tooltip.add(Component.empty().append(Component.literal("BROKEN").withStyle(ChatFormatting.RED)));
         }
-        //tooltip.add(Component.empty().append(Component.literal("Sockets: ")).append(Component.literal("■ ".repeat(data.getUsedSockets())).withStyle(ChatFormatting.GREEN)).append("■ ".repeat(data.getTotalSockets()-data.getUsedSockets())).withStyle(ChatFormatting.GRAY));
-        //tooltip.add(Component.empty().append(Component.literal("Sockets: ")).append(Component.literal("● ".repeat(data.getUsedSockets())).withStyle(ChatFormatting.GREEN)).append("● ".repeat(data.getTotalSockets()-data.getUsedSockets())).withStyle(ChatFormatting.GRAY));
         tooltip.add(Component.empty().append(Component.literal("Sockets: ")).append(Component.literal("◆ ".repeat(data.getUsedSockets())).withStyle(ChatFormatting.GREEN)).append("◆ ".repeat(data.getTotalSockets()-data.getUsedSockets())).withStyle(ChatFormatting.GRAY));
-       // tooltip.add(Component.empty().append(Component.literal("Sockets: ")).append(Component.literal("⬟ ".repeat(data.getUsedSockets())).withStyle(ChatFormatting.GREEN)).append("⬟ ".repeat(data.getTotalSockets()-data.getUsedSockets())).withStyle(ChatFormatting.GRAY));
         tooltip.add(Component.empty().append(Component.literal("Repairs: ")).append(Component.literal("◆ ".repeat(data.getUsedRepairs())).withStyle(ChatFormatting.GREEN)).append("◆ ".repeat(data.getTotalRepairs()-data.getUsedRepairs())).withStyle(ChatFormatting.GRAY));
         int miningSpeedModifier = getMiningSpeedModifier(stack);
         int durabilityModifier = getDurabilityModifier(stack);
@@ -103,7 +100,6 @@ public class PaxelBase extends DiggerItem {
         if (durabilityModifier > 0) {
             tooltip.add(Component.empty().append(Component.literal("Durability Modifier: ")).append(Component.literal("" + getDurabilityModifier(stack)).withStyle(ChatFormatting.BLUE)));
         }
-
         for (ToolCapabilities tool : worksAsTool()){
             tooltip.add(Component.empty().append(Component.literal("Works as Tool: ")).append(Component.literal(tool.getName()).withStyle(ChatFormatting.BLUE)));
         }
@@ -125,10 +121,8 @@ public class PaxelBase extends DiggerItem {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
         if (InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(),InputConstants.KEY_LSHIFT)){
-            //setSockets(player.getItemInHand(hand),(getSockets(player.getItemInHand(hand))+1));
             PaxelData data = getToolData(player.getItemInHand(hand));
             PaxelData newData = new PaxelData(data.getTotalSockets() + 1, data.getUsedSockets(), data.getMiningSpeedModifier(), data.getTotalRepairs(),data.getUsedRepairs(), data.getDurabilityModifier(), data.isBroken());
-            // Transfigured.LOGGER.info(newData.getData());
             setToolData(player.getItemInHand(hand), newData);
         } else if (InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(),InputConstants.KEY_LCONTROL)) {
             PaxelData data = getToolData(player.getItemInHand(hand));
@@ -175,70 +169,8 @@ public class PaxelBase extends DiggerItem {
             PaxelData newData = new PaxelData(data.getTotalSockets(), data.getUsedSockets(), data.getMiningSpeedModifier(), data.getTotalRepairs(),data.getUsedRepairs(), data.getDurabilityModifier(), true);
             setToolData(stack,newData);
             stack.setDamageValue(0);
-
             level.playLocalSound(pos, SoundEvents.ANVIL_BREAK, SoundSource.BLOCKS,1.0f,1.0f,true);
         }
     }
-    public static boolean hasModifier(ItemStack stack,String name){
-        List<Modifier> modifiersList = getModifiers(stack);
-        for (Modifier modifier : modifiersList){
-            if (modifier.getName().equals(name)){
-                return true;
-            }
-        }
-        return false;
-    }
-    public static void addModifier(ItemStack stack, Modifier modifier) {
-        CompoundTag tag = stack.getOrCreateTag();
-        ListTag modifiersList = tag.getList(MODIFIERS_KEY, 10); // 10 for compound tag type
-        CompoundTag modifierTag = new CompoundTag();
-        if (modifier instanceof LeveledModifier leveledModifier) {
-            modifierTag.putString("Type", leveledModifier.getName());
-            modifierTag.putInt("Level", leveledModifier.getLevel());
-        }
-        else if (modifier instanceof BooleanModifier){
-            modifierTag.putString("Type", modifier.getName());
-        }
-        else {
-            Transfigured.LOGGER.error("Error passing in modifier {}", modifier.getName());
-        }
-        modifiersList.add(modifierTag);
-        tag.put(MODIFIERS_KEY, modifiersList);
-    }
 
-    public static void removeModifier(ItemStack stack, Modifier modifier) {
-        CompoundTag tag = stack.getOrCreateTag();
-        if (tag.contains(MODIFIERS_KEY)) {
-            ListTag modifiersList = tag.getList(MODIFIERS_KEY, 10);
-            ListTag newModifiersList = new ListTag();
-            for (int i = 0; i < modifiersList.size(); i++) {
-                CompoundTag modifierTag = modifiersList.getCompound(i);
-                String type = modifierTag.getString("Type");
-                if (!type.equals(modifier.getName())) {
-                    newModifiersList.add(modifierTag);
-                }
-            }
-            tag.put(MODIFIERS_KEY, newModifiersList);
-        }
-    }
-
-    public static List<Modifier> getModifiers(ItemStack stack) {
-        CompoundTag tag = stack.getTag();
-        List<Modifier> modifiers = new ArrayList<>();
-        if (tag != null && tag.contains(MODIFIERS_KEY)) {
-            ListTag modifiersList = tag.getList(MODIFIERS_KEY, 10);
-            for (int i = 0; i < modifiersList.size(); i++) {
-                CompoundTag modifierTag = modifiersList.getCompound(i);
-                String type = modifierTag.getString("Type");
-
-                if (ModifierRegistry.MODIFIERS_MAP.get(type) instanceof BooleanModifier){
-                    modifiers.add(ModifierRegistry.MODIFIERS_MAP.get(type));
-                } else if (ModifierRegistry.MODIFIERS_MAP.get(type) instanceof LeveledModifier modifier){
-                    modifier.setLevel(modifierTag.getInt("Level"));
-                    modifiers.add(modifier);
-                }
-            }
-        }
-        return modifiers;
-    }
 }
