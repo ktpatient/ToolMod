@@ -121,17 +121,11 @@ public class PaxelBase extends DiggerItem {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
         if (InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(),InputConstants.KEY_LSHIFT)){
-            PaxelData data = getToolData(player.getItemInHand(hand));
-            PaxelData newData = new PaxelData(data.getTotalSockets() + 1, data.getUsedSockets(), data.getMiningSpeedModifier(), data.getTotalRepairs(),data.getUsedRepairs(), data.getDurabilityModifier(), data.isBroken());
-            setToolData(player.getItemInHand(hand), newData);
+            incrementTotalSockets(player.getItemInHand(hand));
         } else if (InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(),InputConstants.KEY_LCONTROL)) {
-            PaxelData data = getToolData(player.getItemInHand(hand));
-            PaxelData newData = new PaxelData(data.getTotalSockets(), data.getUsedSockets(), data.getMiningSpeedModifier(), data.getTotalRepairs()+1,data.getUsedRepairs(), data.getDurabilityModifier(), data.isBroken());
-            setToolData(player.getItemInHand(hand), newData);
+            incrementTotalRepairs(player.getItemInHand(hand));
         } else if (InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(),InputConstants.KEY_LALT)){
-            PaxelData data = getToolData(player.getItemInHand(hand));
-            PaxelData newData = new PaxelData(data.getTotalSockets(), data.getUsedSockets(), data.getMiningSpeedModifier(), data.getTotalRepairs(),data.getUsedRepairs(), data.getDurabilityModifier(), false);
-            setToolData(player.getItemInHand(hand), newData);
+            setBroken(player.getItemInHand(hand),false);
         }
         return super.use(level, player, hand);
     }
@@ -165,9 +159,7 @@ public class PaxelBase extends DiggerItem {
     }
     private void checkBroken(Level level,BlockPos pos, ItemStack stack) {
         if (stack.getDamageValue()+1 >= stack.getMaxDamage()) {
-            PaxelData data = getToolData(stack);
-            PaxelData newData = new PaxelData(data.getTotalSockets(), data.getUsedSockets(), data.getMiningSpeedModifier(), data.getTotalRepairs(),data.getUsedRepairs(), data.getDurabilityModifier(), true);
-            setToolData(stack,newData);
+            PaxelData.setBroken(stack,true);
             stack.setDamageValue(0);
             level.playLocalSound(pos, SoundEvents.ANVIL_BREAK, SoundSource.BLOCKS,1.0f,1.0f,true);
         }

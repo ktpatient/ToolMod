@@ -6,6 +6,10 @@ import net.minecraft.world.item.ItemStack;
 public class PaxelData {
     private final long data;
 
+    public static PaxelData fromData(PaxelData default_){
+        return new PaxelData(default_.getTotalRepairs(),default_.getUsedRepairs(),default_.getMiningSpeedModifier(),default_.getTotalRepairs(),default_.getUsedRepairs(),default_.getDurabilityModifier(),default_.isBroken());
+    }
+
     public PaxelData (long data){
         this.data = data;
     }
@@ -95,6 +99,32 @@ public class PaxelData {
     public static void addMiningSpeed(ItemStack stack, int speed) {
         PaxelData data = getToolData(stack);
         PaxelData newData = new PaxelData(data.getTotalSockets(), data.getUsedSockets(), data.getMiningSpeedModifier()+speed, data.getTotalRepairs(),data.getUsedRepairs(), data.getDurabilityModifier(), data.isBroken());
+        setToolData(stack,newData);
+    }
+    public static void setBroken(ItemStack stack, boolean broken) {
+        PaxelData data = getToolData(stack);
+        PaxelData newData = new PaxelData(data.getTotalSockets(), data.getUsedSockets(), data.getMiningSpeedModifier(), data.getTotalRepairs(),data.getUsedRepairs(), data.getDurabilityModifier(), broken);
+        setToolData(stack,newData);
+    }
+
+    public static void setTotalSockets(ItemStack stack, int count) {
+        PaxelData data = getToolData(stack);
+        PaxelData newData = new PaxelData(count, data.getUsedSockets(), data.getMiningSpeedModifier(), data.getTotalRepairs(),data.getUsedRepairs(), data.getDurabilityModifier(), data.isBroken());
+        setToolData(stack,newData);
+    }
+    public static void incrementTotalSockets(ItemStack stack) {
+        PaxelData data = getToolData(stack);
+        PaxelData newData = new PaxelData(data.getTotalSockets()+1, data.getUsedSockets(), data.getMiningSpeedModifier(), data.getTotalRepairs(),data.getUsedRepairs(), data.getDurabilityModifier(), data.isBroken());
+        setToolData(stack,newData);
+    }
+    public static void setTotalRepairs(ItemStack stack, int count) {
+        PaxelData data = getToolData(stack);
+        PaxelData newData = new PaxelData(data.getTotalSockets(), data.getUsedSockets(), data.getMiningSpeedModifier(), count,data.getUsedRepairs(), data.getDurabilityModifier(), data.isBroken());
+        setToolData(stack,newData);
+    }
+    public static void incrementTotalRepairs(ItemStack stack){
+        PaxelData data = getToolData(stack);
+        PaxelData newData = new PaxelData(data.getTotalSockets(), data.getUsedSockets(), data.getMiningSpeedModifier(), data.getTotalRepairs()+1, data.getUsedRepairs(), data.getDurabilityModifier(), data.isBroken());
         setToolData(stack,newData);
     }
 }
